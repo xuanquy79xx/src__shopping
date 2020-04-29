@@ -1,0 +1,47 @@
+
+.login,.login__form input{
+    text-align: center;
+}
+.login__form{
+    width: 90%;
+    max-width: 400px;
+    margin: auto;
+}
+.login__form input[type="date"]{
+    padding: 12px 0;
+    padding-left: 10%;
+}
+.login__form>input,form.login__form>div>input{
+    padding: 12px 5%;
+    width: 90%;
+    border-radius: 20px;
+    border: 1px solid #6633998a;
+    font-size: large;
+    margin: 5px auto;
+
+}
+
+.login__form--account{
+    display: flex;
+    justify-content: space-between;
+    color: #686868;
+    margin: 5px 0;
+}
+.login__form--account span:hover{
+    color: black;
+    cursor: pointer;
+}
+ .login__form button{
+    width: 40%;
+    font-weight: 600;
+    font-size: large;
+    letter-spacing: 1px;
+    margin: 10px 5px;
+    border: 1px solid #ff4500;
+}
+
+
+
+form.login__form>div>label {
+    display: flex;
+}
