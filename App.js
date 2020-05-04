@@ -10,6 +10,8 @@ import NotFound from './Components/NotFound';
 import Footer from './Components/Footer';
 import Login from './Components/login/login';
 import Register from './Components/login/register';
+import User from './Components/user';
+import CheckOut from './Components/checkout/checkout';
 function App() {
   document.title = "Shopping"
   return (
@@ -22,6 +24,8 @@ function App() {
           <Route path="/product-detail" component={ProductDetail} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
+          <Route path="/user" component={User} />
+          <Route path="/checkout" component={CheckOut} />
           <Route path="" component={NotFound} />
         </Switch>
         <Footer />

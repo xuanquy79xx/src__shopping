@@ -1,0 +1,148 @@
+.user{
+    justify-content: space-evenly;
+}
+.user__info, 
+.user__address--info{
+    width: 100%;
+    max-width: 400px;
+}
+.user__info>div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.user__info input:not(.user__info--gender) {
+    height: 1.5rem;
+    margin: .25rem 0;
+    border-radius: 5px;
+    border: 1px solid #7a7a7a8f;
+    width: 50%;
+    padding-left: 1rem;
+}
+.user__info label{
+    cursor: pointer;
+    color: #2a2a2a;
+}
+.user__info input:focus{
+    box-shadow: 0px 0px 20px 1px #ff9e7a2e, inset 0px 0px 7px 0px #7878782e;
+    border: 1px solid rgba(255, 69, 0, .5);
+}
+
+
+.user__info button{font-size: large;}
+.user__info button,
+.user__address button{
+    color: #ff4500;
+    margin: 1rem .8rem;
+    padding: .4rem 1rem;
+    border: 1px solid #ff4500;
+    transition: all .2s;
+    border-radius: 2px;
+
+}
+.user__info button:hover,
+.user__address button:hover{
+    color: #ffffff;
+    text-shadow: 0 0 1px #ff4500;
+    background: #ff4500;
+    border-radius: 7px;
+
+}
+
+
+
+/* user__address */
+
+.user__address--info{
+    justify-content: flex-start;
+}
+.user__address{
+    width: 100%;
+    max-width: 500px;
+}
+/* add checkout */
+
+.user__address--body *,
+.order *{
+ margin: 0;
+ padding: 0 .5rem;
+ line-height: 1.3;
+ text-align: left;
+
+}
+/* add checkout */
+.user__address--body>div,
+.order>div{
+    padding: 5px;
+    margin: 1rem 0;
+    background: #c7c7c773;
+    border-radius: 10px;
+    
+}
+/* add checkout */
+.user__address--detail,
+.order__shipping--address{
+    width: 100%;
+    word-break: break-word;
+}
+.user__address button{
+    padding: .2rem .5rem;
+    margin: auto 0.2rem;
+    border-radius: 7px;
+    position: relative;
+}
+.user__address--add{
+    width: 50px;
+    height: 50px;
+    border-radius: 999px!important;
+    text-align: center;
+}
+
+
+/*  == tooltip ==  */
+.user__address--button:before,
+.user__address--button:after,
+.user__address--add:before,.user__address--add:after{
+    position: absolute;
+    background: #595959;
+    display: none;
+}
+.user__address--button:before,
+.user__address--add:before {
+    color: white;
+    top: -35px;
+    left: 0;
+    padding: 4px 10px;
+    border-radius: 5px;
+    z-index: 2;
+}
+.user__address--button:after,
+.user__address--add:after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    top: -30%;
+    left: 35%;
+    transform: rotate(45deg) translate(-60%, -50%);
+    z-index: 1;
+}
+.button__edit:before{
+    content: "sửa";
+}
+.button__delete:before{
+    content: "xóa";
+}
+.user__address--add:before{
+    content:"thêm";
+}
+.user__address--add:after {
+    top: -10px;
+    transform: rotate(45deg) scale(1.2) translate(-50%, -50%);
+}
+.user__address--button:hover:before,
+.user__address--button:hover:after,
+.user__address--add:hover:before,
+.user__address--add:hover:after{
+    display: inline;
+}
+/* end tooltip */

@@ -21,7 +21,7 @@ function Login() {
                     .then(Data => {
                         Data.forEach(item => {
                             if (item.username === md5(username.value) && item.password === md5(password.value)) {
-                                localStorage.setItem('username', JSON.stringify(item))
+                                localStorage.setItem('username', JSON.stringify({ fullName: item.fullName, ID: item.ID }))
                                 checked = true;
                             }
                         })

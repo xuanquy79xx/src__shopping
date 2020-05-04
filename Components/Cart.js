@@ -50,9 +50,10 @@ function Cart({ Cart, DELETE_PRODUCT_IN_CART, CHANGE_QUANTITY_IN_CART }) {
     }
 
     let pay = () => {
-        if (localStorage.getItem('username')) {
-            alert('are you sure :: ' + sumTotal())
-        }
+        // if (localStorage.getItem('username')) {
+        //     alert('are you sure :: ' + sumTotal())
+        // }
+        console.log("let's pay")
 
     }
     window.onresize = () => {
@@ -85,7 +86,7 @@ function Cart({ Cart, DELETE_PRODUCT_IN_CART, CHANGE_QUANTITY_IN_CART }) {
                             <th></th>
                             <th></th>
                             <th>{sumTotal()}$</th>
-                            <th><button className="btn_c" onClick={() => pay()} style={{ width: "100px" }}>Thanh Toán</button> </th>
+                            <th><Link to="/checkout" className="btn_c " style={{ width: "100px", padding: "10px" }} onClick={() => pay()}>Thanh Toán</Link></th>
                         </tr>
                     </tfoot>
                 </table>
@@ -116,7 +117,7 @@ function Cart({ Cart, DELETE_PRODUCT_IN_CART, CHANGE_QUANTITY_IN_CART }) {
                 }
                 <div className="fl_r" style={{ justifyContent: "flex-end" }}>
                     <span>{sumTotal()}$</span>
-                    <button className="btn_c cart__mobile--pay" onClick={() => pay()}>Thanh Toán</button>
+                    <Link to="/checkout" className="btn_c cart__mobile--pay" onClick={() => pay()}>Thanh Toán</Link>
                 </div>
             </div >
 

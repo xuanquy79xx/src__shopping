@@ -13,9 +13,9 @@ export const SORT_BY_PRICE = (type) => { return { type: "SORT_BY_PRICE", numb: t
 export const OPTION_LEFT = (Messenger, search, star, priceFrom, priceTo) => { return { type: "OPTION_LEFT", TypeMess: Messenger, search, star, priceFrom, priceTo } }
 
 
-export const ADD_TO_CART = (product, size, quantity) => {notification("thêm"); return { type: "ADD_TO_CART", product, size, quantity } }
-export const DELETE_PRODUCT_IN_CART = (product) => { notification("xóa");return { type: "DELETE_PRODUCT_IN_CART", product } }
-export const CHANGE_QUANTITY_IN_CART = (product, quantity) => {notification('thay đổi số lượng'); return { type: "CHANGE_QUANTITY_IN_CART", product, quantity } }
+export const ADD_TO_CART = (product, size, quantity) => { notification("thêm"); return { type: "ADD_TO_CART", product, size, quantity } }
+export const DELETE_PRODUCT_IN_CART = (product) => { notification("xóa"); return { type: "DELETE_PRODUCT_IN_CART", product } }
+export const CHANGE_QUANTITY_IN_CART = (product, quantity) => { notification('thay đổi số lượng'); return { type: "CHANGE_QUANTITY_IN_CART", product, quantity } }
 export const SEARCH_IN = (Messenger) => { return { Type: "SEARCH_IN", Messenger } }
 
 
@@ -27,6 +27,24 @@ function notification(string) {
     `
     notification.classList.add("active")
     setTimeout(() => {
-    notification.classList.remove("active")
+        notification.classList.remove("active")
     }, 1000);
+
 }
+
+export const FETCH_DATA = (URL, method, data) => {
+    return fetch(URL, {
+        method,
+        headers: { 'Content-Type': 'application/json', },
+        body: JSON.stringify(data)
+
+    })
+}
+// export const FETCH_POST_DATA = (URL, data) => {
+//     return fetch(URL, {
+//         method: "POST",
+//         headers: { 'Content-Type': 'application/json', },
+//         body: JSON.stringify(data)
+
+//     })
+// }

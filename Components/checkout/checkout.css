@@ -1,0 +1,66 @@
+.checkout {
+    display: flex;
+    justify-content: space-around;
+    color: #171c22;
+}
+.order>h3{
+    text-align: left;
+    padding-left: 5px;
+}
+.order{
+    width: 60%;
+}
+.order>div{
+    padding: 1.5rem 0;
+}
+
+/* Payment */
+.Payment{
+    width: 40%;
+    max-width: 400px;
+    box-shadow: 2px 0px 6px 0px #d1d1d1,
+     inset 0 0 20px 0px #d1d1d1;
+     background: #dddddd;
+}
+
+.Payment>div{
+    margin: 1rem auto;
+}
+.Payment h5{
+    margin: 0;
+}
+.Payment__products{
+    width: 90%;
+}
+
+.Payment__products--details{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f2f2f2;
+    padding:5px 10px;
+    border: 1px solid #bfbfbf;
+    margin: 1rem 0;
+}
+.Payment__products--details img{
+    width: 70px;
+    margin-right: 10px;
+}
+.Payment__products--details small{
+    opacity: .8;
+    text-align: left;
+    margin-left: 5px;
+}
+
+
+.Payment__note textarea{
+    width: 90%;
+    padding-top: .5rem;
+    padding-left: .5rem;
+    max-width: 380px;
+    max-height: 400px;
+}
+.Payment__total>div,.Payment__totalAndSubmit>div{
+    justify-content: space-evenly;
+    padding: 1rem 0;
+}
