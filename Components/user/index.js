@@ -1,12 +1,26 @@
 
 import React, { useState } from 'react';
 import FormAddress from './address/index'
+import OrderTab from './orderTab/orderTab'
 import Info from './info';
-import './user.css'
 import { API } from '../../ConfigAPI/ConfigAPI'
 import { Prompt } from 'react-router-dom';
+import { FETCH_USER_DATA, FETCH_ALL_DATA } from '../../Actions/index'
+import { connect } from 'react-redux';
+
+import './user.css'
+
 let infoData = []
-function User() {
+
+const mapDispatchToProps = dispatch => {
+    return {
+        FETCH_USER_DATA: (data) => {
+            dispatch(FETCH_USER_DATA(data))
+        }
+    }
+}
+
+function User({ FETCH_USER_DATA }) {
 
     const [checked, set_New_Address] = useState(true) // check add address
     const [info, setInfo] = useState(true) // fetch data
@@ -36,37 +50,11 @@ function User() {
         sessionStorage.setItem("mode_Edit", JSON.stringify(id))
         set_New_Address(false)
     }
-    function paymentAddress(info) {
-        let { address } = info
-        if (address.length > 0) {
-            return address.map((item, index) => {
-                return (
-                    <div key={index}>
-                        <div className="fl_r user__address--info">
-                            <h5>{item.name}</h5>
-                            <h5>{item.tel}</h5>
-                        </div>
-                        <div className="user__address--detail">
-                            <p>{item.address}</p>
-                        </div>
-                        <div >
-                            <button className="user__address--button button__edit" onClick={() => editAddress(item.id)}>
-                                <i className="far fa-edit"></i>
-                            </button>
-                            <button className="user__address--button button__delete" onClick={() => deleteAddress(info.id, item.id)}>
-                                <i className="far fa-trash-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-                )
-            })
-        }
-    }
+
 
     // show address
     function addressDetail(checked, infoData) {
         if (checked) {
-
             if (infoData) { // neu ton tai info
                 return (
                     <>
@@ -81,24 +69,50 @@ function User() {
                     </>
                 )
             }
-
         } else {
             return <FormAddress checkedForm={checkedForm} infoUser={infoData} />
         }
     }
 
-    //check fetch user
-    let user = JSON.parse(localStorage.getItem('username'))
-    if (info) {
-        fetch(API)
-            .then(res => res.json())
-            .then(data => {
-                infoData = data.filter(item => item.ID === user.ID)
-                setInfo(!info)
-            })
-            .catch(err => alert("fetch API error :: " + err))
+    function paymentAddress(info) {
+        let { address } = info
+        // if (address.length > 0) {
+        return address.map((item, index) => {
+            return (
+                <div key={index}>
+                    <div className="fl_r user__address--info">
+                        <h5>{item.name}</h5>
+                        <h5>{item.tel}</h5>
+                    </div>
+                    <div className="user__address--detail">
+                        <p>{item.address}</p>
+                    </div>
+                    <div >
+                        <button className="user__address--button button__edit" onClick={() => editAddress(item.id)}>
+                            <i className="far fa-edit"></i>
+                        </button>
+                        <button className="user__address--button button__delete" onClick={() => deleteAddress(info.id, item.id)}>
+                            <i className="far fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            )
+        })
+        // }
     }
 
+
+
+    //check fetch user
+    let user = JSON.parse(localStorage.getItem('username'))
+    if (info || infoData.length === 0) {
+        FETCH_ALL_DATA(API, data => {
+            infoData = data.filter(item => item.ID === user.ID)
+            FETCH_USER_DATA(infoData) // luu user trong store
+            setInfo(!info)
+        })
+    }
+    console.log(info)
     return (
         <div className="main--content txt_c" style={{ padding: "3rem 0" }}>
 
@@ -109,16 +123,18 @@ function User() {
                     return "are you sure"
                 }}
             />
+
             <div className="fl_r user">
                 <Info infoUser={infoData[0]} />
                 <div className="user__address">
                     {addressDetail(checked, infoData[0])}
                 </div>
             </div>
+            <OrderTab />
         </div>
     )
 }
-export default User;
+export default connect(null, mapDispatchToProps)(User);
 
 
 

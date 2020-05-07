@@ -401,10 +401,20 @@ button.btn_c.quantity {
 }
 .cart__mobile{
   align-items: center;
-  justify-content:space-evenly;
+  justify-content: flex-start;
   margin: 15px 0;
   box-shadow: 0 0 20px #b0b0b033;
   padding: 10px;
+  position: relative;
+}
+.cart__mobile>div{
+  margin-left: 4%;
+}
+.cart__mobile>span,
+.cart__mobile--delete{
+  position: absolute;
+    top: 45%;
+    right: 15%;
 }
 .cart__mobile h4{
   margin: 0;
@@ -425,7 +435,9 @@ height:100%
 .cart__mobile--delete{
   margin: 0;
   width:30px;
-  height:30px
+  height:30px;
+  right: 5%;
+
 }
 .cart__mobile--pay{
   width: 90px;

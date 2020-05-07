@@ -6,9 +6,6 @@ let style_button = {
     margin: "1rem .8rem",
     padding: ".4rem 1rem"
 }
-
-
-
 function FormAddress(props) {
     let { infoUser } = props
     if (sessionStorage.getItem("mode_Edit")) {
@@ -46,7 +43,6 @@ function checkEdit(infoUser, props, edit) {
         </div>
     )
 }
-
 
 function formNewAddress(numb, props, addressIndex) {
     let { infoUser } = props

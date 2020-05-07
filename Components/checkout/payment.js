@@ -3,11 +3,15 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 const mapStateToProps = state => {
     return {
-        Cart: state.Cart
+        Cart: state.Cart,
+        CheckOut: state.CheckOut,
+        User: state.User
+
     }
 }
 
-function Payment({ Cart }) {
+function Payment({ Cart, User, CheckOut }) {
+    let methodOrder = CheckOut[1]
     let pre_detail = (product) => {
         localStorage.setItem('productDetail', JSON.stringify(product))
     }
@@ -55,7 +59,7 @@ function Payment({ Cart }) {
                 </div>
                 <div className="fl_r">
                     <h5>Phí Vận Chuyển:</h5>
-                    <span>1$</span>
+                    <span>{methodOrder ? methodOrder.price : "..."}$</span>
                 </div>
             </div>
             <div className="Payment__note">
@@ -64,6 +68,7 @@ function Payment({ Cart }) {
                 </div>
                 <div>
                     <textarea
+                        id="noteCustomer"
                         placeholder="Bạn có nhắn gì tới shop không?"
                         rows="6"
                         maxLength="1000"
@@ -73,14 +78,47 @@ function Payment({ Cart }) {
             </div>
             <div className="Payment__totalAndSubmit">
                 <div className="fl_r ">
-                    <h5>Tổng thanh toán</h5> <span>{sumTotal() + 1}$</span>
+                    <h5>Tổng thanh toán</h5> <span>{sumTotal() + (methodOrder ? methodOrder.price : 0)}$</span>
                 </div>
-                <button className="btn_c" style={{ width: "100px" }}>Đặt Hàng</button>
+                <button className="btn_c" style={{ width: "100px" }} onClick={() => methodOrder ? submitCheckOut(User, Cart, CheckOut, sumTotal() + methodOrder.price) : alert("Bạn chưa chọn phương thức vận chuyển")}>Đặt Hàng</button>
             </div>
-
-
-        </div >
+        </div>
     )
-
 }
 export default connect(mapStateToProps, null)(Payment);
+
+function submitCheckOut(user, cart, checkout, sum) {
+    let shippingAddress = checkout[0]
+    let shippingOrder = checkout[1]
+    if (shippingAddress && shippingOrder && cart.length > 0) {
+        let noteCustomer = document.querySelector("#noteCustomer").value
+        let newUser = user[0]
+
+        delete newUser.username
+        delete newUser.password
+        delete newUser.address
+
+        let data = {
+            user: newUser,
+            product: cart,
+            shipping: { ...shippingAddress, ...shippingOrder },
+            total: sum,
+            note: noteCustomer,
+            status: "chờ xử lý"
+        }
+        fetch("https://5e3d62c7a49e540014dc0ba4.mockapi.io/dbCustomer", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json', },
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then(() => {
+                localStorage.removeItem("products")
+                document.location.pathname = "/user"
+            })
+            .catch(er => console.error(er))
+    } else {
+        if (!shippingAddress) alert("Bạn chưa chọn địa chỉ giao hàng")
+        if (!localStorage.getItem("products")) alert("chưa có sản phẩm nào trong giỏ hàng")
+    }
+}

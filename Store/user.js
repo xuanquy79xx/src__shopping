@@ -1,12 +1,14 @@
 
 
-const dataUser = JSON.parse(sessionStorage.getItem('user'))
-const Data = dataUser ? dataUser : [];
-
-const User = (state = Data, action) => {
-
+// const dataUser = JSON.parse(sessionStorage.getItem('addressUser'))
+// const Data = dataUser ? dataUser : [];
+const User = (state = [], action) => {
+    let { data } = action;
     switch (action.type) {
-
+        case "FETCH_USER_DATA":
+            {
+                return [...data]
+            }
         default: return [...state]
     }
 }

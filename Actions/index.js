@@ -1,3 +1,4 @@
+
 export const allProduct = (Messenger) => { return { type: "ALL_PRODUCT", TypeMess: Messenger } }
 export const ProductAo = (Messenger) => { return { type: "PRODUCT_AO", TypeMess: Messenger } }
 export const ProductQuan = (Messenger) => { return { type: "PRODUCT_QUAN", TypeMess: Messenger } }
@@ -32,6 +33,9 @@ function notification(string) {
 
 }
 
+export const FETCH_USER_DATA = data => { return { type: "FETCH_USER_DATA", data } }
+
+
 export const FETCH_DATA = (URL, method, data) => {
     return fetch(URL, {
         method,
@@ -40,11 +44,20 @@ export const FETCH_DATA = (URL, method, data) => {
 
     })
 }
-// export const FETCH_POST_DATA = (URL, data) => {
-//     return fetch(URL, {
-//         method: "POST",
-//         headers: { 'Content-Type': 'application/json', },
-//         body: JSON.stringify(data)
+// fetch cho vao callback function
 
-//     })
-// }
+
+export const FETCH_ALL_DATA = (URL, nextFunction) => {
+    return fetch(URL)
+        .then(res => res.json())
+        .then(nextFunction).catch(err => console.error(err))
+}
+
+export const SHIPPING_CHECKOUT = (checkOption, v1, v2, v3) => {
+    if (checkOption === "address") {
+        return { type: "SHIPPING_CHECKOUT__ADDRESS", address: { name: v1, tel: v2, address: v3 } }
+    }
+    if (checkOption === "method") {
+        return { type: "SHIPPING_CHECKOUT__METHOD", method: { date: v1, price: v2 } }
+    }
+}
