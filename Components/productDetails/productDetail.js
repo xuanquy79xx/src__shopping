@@ -24,7 +24,6 @@ class ProductDetail extends Component {
     }
     BuyNow(product) {
         let { size, quantity } = this.state;
-        console.log(this.state)
         if (size !== null && quantity > 0) {
             this.props.ADD_TO_CART(product, size, parseInt(quantity))
         } else {

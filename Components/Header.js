@@ -60,8 +60,8 @@ function Header({ Cart, allProduct, productAo, productQuan, productGiay, product
                     </div>
                     <div className="--right">
                         <ul>
-                            <li><Link to="/"><i className="fas fa-bell" /><span className="text__responsive">Thông Báo</span> </Link></li>
-                            <li><Link to="/"><i className="far fa-question-circle" /><span className="text__responsive">Trợ Giúp</span></Link></li>
+                            <li><Link to="/user/order"><i className="fas fa-bell" /><span className="text__responsive">Thông Báo</span> </Link></li>
+                            <li><Link to="/user/order"><i className="far fa-question-circle" /><span className="text__responsive">Trợ Giúp</span></Link></li>
                             {nav__link()}
                         </ul>
                     </div>

@@ -16,7 +16,7 @@ export const OPTION_LEFT = (Messenger, search, star, priceFrom, priceTo) => { re
 
 export const ADD_TO_CART = (product, size, quantity) => { notification("thêm"); return { type: "ADD_TO_CART", product, size, quantity } }
 export const DELETE_PRODUCT_IN_CART = (product) => { notification("xóa"); return { type: "DELETE_PRODUCT_IN_CART", product } }
-export const CHANGE_QUANTITY_IN_CART = (product, quantity) => { notification('thay đổi số lượng'); return { type: "CHANGE_QUANTITY_IN_CART", product, quantity } }
+export const CHANGE_QUANTITY_IN_CART = (product, size, quantity) => { notification('thay đổi số lượng'); return { type: "CHANGE_QUANTITY_IN_CART", product, size, quantity } }
 export const SEARCH_IN = (Messenger) => { return { Type: "SEARCH_IN", Messenger } }
 
 
@@ -60,4 +60,8 @@ export const SHIPPING_CHECKOUT = (checkOption, v1, v2, v3) => {
     if (checkOption === "method") {
         return { type: "SHIPPING_CHECKOUT__METHOD", method: { date: v1, price: v2 } }
     }
+}
+export const LOADING = checked => {
+    let cursorBody = document.body.style;
+    checked ? cursorBody.cursor = "wait" : cursorBody.cursor = "default"
 }

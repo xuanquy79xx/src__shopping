@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
+import { LOADING, FETCH_ALL_DATA } from '../../Actions';
 const mapStateToProps = state => {
     return {
         Cart: state.Cart,
@@ -87,36 +88,46 @@ function Payment({ Cart, User, CheckOut }) {
 }
 export default connect(mapStateToProps, null)(Payment);
 
-function submitCheckOut(user, cart, checkout, sum) {
+async function submitCheckOut(user, cart, checkout, sum) {
     let shippingAddress = checkout[0]
     let shippingOrder = checkout[1]
     if (shippingAddress && shippingOrder && cart.length > 0) {
+
+        LOADING(true)
         let noteCustomer = document.querySelector("#noteCustomer").value
         let newUser = user[0]
-
-        delete newUser.username
-        delete newUser.password
-        delete newUser.address
-
         let data = {
-            user: newUser,
-            product: cart,
-            shipping: { ...shippingAddress, ...shippingOrder },
-            total: sum,
-            note: noteCustomer,
-            status: "chờ xử lý"
+            user: { ID: newUser.ID, id: newUser.id, email: newUser.email },
+            order: [{ product: cart, ...shippingAddress, ...shippingOrder, total: sum, note: noteCustomer, status: "chờ xử lý" }],
         }
-        fetch("https://5e3d62c7a49e540014dc0ba4.mockapi.io/dbCustomer", {
-            method: "POST",
-            headers: { 'Content-Type': 'application/json', },
-            body: JSON.stringify(data)
-        })
-            .then(res => res.json())
-            .then(() => {
-                localStorage.removeItem("products")
-                document.location.pathname = "/user"
+
+        await FETCH_ALL_DATA("https://5e3d62c7a49e540014dc0ba4.mockapi.io/dbCustomer", dt => {
+            let index = -1;
+            let temp = null;
+            for (const i in dt) {
+                if (dt[i].user.ID === newUser.ID) {
+                    index = dt[i].id
+                    temp = i
+                }
+            }
+            fetch(`https://5e3d62c7a49e540014dc0ba4.mockapi.io/dbCustomer/${index !== -1 ? index : ""}`, {
+                method: `${index !== -1 ? "PUT" : "POST"}`,
+                headers: { 'Content-Type': 'application/json', },
+                body: JSON.stringify(index !== -1 ? { order: [...dt[temp].order, ...data.order] } : data)
             })
-            .catch(er => console.error(er))
+                .then(res => res.json())
+                .then(() => {
+                    localStorage.removeItem("products")
+                    document.location.pathname = "/user/order"
+                })
+                .catch(er => {
+                    LOADING(false)
+                    console.error(er)
+                })
+        })
+
+
+
     } else {
         if (!shippingAddress) alert("Bạn chưa chọn địa chỉ giao hàng")
         if (!localStorage.getItem("products")) alert("chưa có sản phẩm nào trong giỏ hàng")

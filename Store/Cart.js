@@ -29,7 +29,7 @@ const Cart = (state = Data, action) => {
 
         case 'CHANGE_QUANTITY_IN_CART':
             {
-                let item = findProductInCart(state, product);
+                let item = findSuperProductInCart(state, product, size);
                 if (item !== -1) {
                     state[item].quantity += quantity;
                     if (state[item].quantity < 1) state[item].quantity = 1;

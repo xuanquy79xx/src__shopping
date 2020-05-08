@@ -3,7 +3,7 @@
 
 body{
   margin: 0;
-  padding: 0; 
+  padding: 0;
   font-size: 20px;
   font-family: Roboto,Helvetica,Arial,sans-serif;
   font-weight: 300;
@@ -104,7 +104,7 @@ button.btn_tr:active {
   .--header--top a:hover {
     color: #fff;
   }
-  
+
   .--header--center{
     display: flex;
     flex-direction: row;
@@ -236,7 +236,7 @@ main .left--option{
   text-transform: lowercase;
 }
 
-.left--option .rate--star .active { 
+.left--option .rate--star .active {
   background: #c4bfea;
 }
 /* ======right content====== */
@@ -377,7 +377,7 @@ main .left--option{
 
   transform: translate(100%, 0) scale(.1);
   transition: all .2s cubic-bezier(0.31, -0.12, 0.42, 1.29);
-  
+
 }
 .footer__notification.active{
   transform: translate(0, 0);
@@ -551,6 +551,9 @@ height:100%
 
 }
 @media (max-width:700px){
+  body{
+    font-size: 16px;
+  }
   .--header--center {
     padding: 1.7rem 0;
 }
@@ -631,6 +634,9 @@ main .--left--content.left--option:before {
 }
 }
 @media (max-width:400px){
+  body{
+    font-size: 13px;
+  }
   .--content {
     grid-template-columns:  1fr 1fr;
 }

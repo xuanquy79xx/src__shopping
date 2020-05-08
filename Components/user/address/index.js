@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { API } from '../../../ConfigAPI/ConfigAPI'
-import { FETCH_DATA } from '../../../Actions/index'
+import { FETCH_DATA, LOADING } from '../../../Actions/index'
 let style_button = {
     margin: "1rem .8rem",
     padding: ".4rem 1rem"
@@ -20,7 +20,7 @@ export default FormAddress;
 function checkEdit(infoUser, props, edit) {
     let mode_Edit = JSON.parse(sessionStorage.getItem("mode_Edit"))
     let { fullName, tel, address } = infoUser;
-    let addressIndex = address[mode_Edit - 1] //{id: name: tel: address}
+    let addressIndex = address.find(item => item.id === mode_Edit);
     return (
         <div className="fl_r user" >
             <div className="user__info">
@@ -53,7 +53,8 @@ function formNewAddress(numb, props, addressIndex) {
             checkNumb = /0+([0-9]{9,10})\b/g;
         let data = { name, tel, address }
         if (name !== '' && checkNumb.test(tel) && address !== '') {
-            // neu addressIndex ton tai ( Edit ) => PUT   
+            LOADING(true)
+            // neu addressIndex ton tai ( Edit ) => PUT
             FETCH_DATA(`${API}/${infoUser.id}/address/${addressIndex ? addressIndex.id : ""}`, `${addressIndex ? "PUT" : "POST"}`, data)
                 .then(res => res.json())
                 .then(() => {
@@ -62,6 +63,7 @@ function formNewAddress(numb, props, addressIndex) {
                     if (addressIndex) {
                         sessionStorage.removeItem("mode_Edit")
                     }
+                    LOADING(false)
                 })
                 .catch(err => console.log(err))
         } else {

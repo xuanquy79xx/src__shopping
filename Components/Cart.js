@@ -12,8 +12,8 @@ const mapDispatchToProps = dispatch => {
         DELETE_PRODUCT_IN_CART: product => {
             dispatch(DELETE_PRODUCT_IN_CART(product))
         },
-        CHANGE_QUANTITY_IN_CART: (product, quantity) => {
-            dispatch(CHANGE_QUANTITY_IN_CART(product, quantity))
+        CHANGE_QUANTITY_IN_CART: (product, size, quantity) => {
+            dispatch(CHANGE_QUANTITY_IN_CART(product, size, quantity))
         }
     }
 }
@@ -32,9 +32,9 @@ function Cart({ Cart, DELETE_PRODUCT_IN_CART, CHANGE_QUANTITY_IN_CART }) {
                 <th>{item.size}</th>
                 <th>{item.product.price}$</th>
                 <th>
-                    <button className="btn_c quantity" onClick={() => CHANGE_QUANTITY_IN_CART(item.product, -1)}>-</button>
+                    <button className="btn_c quantity" onClick={() => CHANGE_QUANTITY_IN_CART(item.product, item.size, -1)}>-</button>
                     {item.quantity}
-                    <button className="btn_c quantity" onClick={() => CHANGE_QUANTITY_IN_CART(item.product, 1)}>+</button>
+                    <button className="btn_c quantity" onClick={() => CHANGE_QUANTITY_IN_CART(item.product, item.size, 1)}>+</button>
                 </th>
                 <th>{item.product.price * item.quantity}$</th>
                 <th><button className="btn_c" onClick={() => DELETE_PRODUCT_IN_CART(item.product)} >X</button></th>
@@ -49,13 +49,6 @@ function Cart({ Cart, DELETE_PRODUCT_IN_CART, CHANGE_QUANTITY_IN_CART }) {
         return sum;
     }
 
-    let pay = () => {
-        // if (localStorage.getItem('username')) {
-        //     alert('are you sure :: ' + sumTotal())
-        // }
-        console.log("let's pay")
-
-    }
     window.onresize = () => {
         if (window.innerWidth > 500 && window.innerWidth < 550) {
             document.location.reload()
@@ -86,7 +79,7 @@ function Cart({ Cart, DELETE_PRODUCT_IN_CART, CHANGE_QUANTITY_IN_CART }) {
                             <th></th>
                             <th></th>
                             <th>{sumTotal()}$</th>
-                            <th><Link to="/checkout" className="btn_c " style={{ width: "100px", padding: "10px" }} onClick={() => pay()}>Thanh Toán</Link></th>
+                            <th><Link to="/checkout" className="btn_c " style={{ width: "100px", padding: "10px" }} >Thanh Toán</Link></th>
                         </tr>
                     </tfoot>
                 </table>
@@ -104,9 +97,9 @@ function Cart({ Cart, DELETE_PRODUCT_IN_CART, CHANGE_QUANTITY_IN_CART }) {
                                     <Link to={`/product-detail`} onClick={() => pre_detail(item.product)} ><h4 >{item.product.name}</h4></Link>
                                     <span >size: {item.size}</span>
                                     <div className="fl_r cart__mobile--quantity" >
-                                        <button className="btn_c quantity" onClick={() => CHANGE_QUANTITY_IN_CART(item.product, -1)}>-</button>
+                                        <button className="btn_c quantity" onClick={() => CHANGE_QUANTITY_IN_CART(item.product, item.size, -1)}>-</button>
                                         {item.quantity}
-                                        <button className="btn_c quantity" onClick={() => CHANGE_QUANTITY_IN_CART(item.product, 1)}>+</button>
+                                        <button className="btn_c quantity" onClick={() => CHANGE_QUANTITY_IN_CART(item.product, item.size, 1)}>+</button>
                                     </div>
                                 </div>
                                 <span> {item.product.price}$ </span>
@@ -117,7 +110,7 @@ function Cart({ Cart, DELETE_PRODUCT_IN_CART, CHANGE_QUANTITY_IN_CART }) {
                 }
                 <div className="fl_r" style={{ justifyContent: "flex-end" }}>
                     <span>{sumTotal()}$</span>
-                    <Link to="/checkout" className="btn_c cart__mobile--pay" onClick={() => pay()}>Thanh Toán</Link>
+                    <Link to="/checkout" className="btn_c cart__mobile--pay">Thanh Toán</Link>
                 </div>
             </div >
 

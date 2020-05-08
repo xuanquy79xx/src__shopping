@@ -1,11 +1,10 @@
 
 import React, { useState } from 'react';
 import FormAddress from './address/index'
-import OrderTab from './orderTab/orderTab'
 import Info from './info';
 import { API } from '../../ConfigAPI/ConfigAPI'
 import { Prompt } from 'react-router-dom';
-import { FETCH_USER_DATA, FETCH_ALL_DATA } from '../../Actions/index'
+import { FETCH_USER_DATA, FETCH_ALL_DATA, LOADING } from '../../Actions/index'
 import { connect } from 'react-redux';
 
 import './user.css'
@@ -36,12 +35,14 @@ function User({ FETCH_USER_DATA }) {
 
     function deleteAddress(userID, id) {
         if (window.confirm("Bạn muốn xóa địa chỉ này ?")) {
+            LOADING(true)
             fetch(`${API}/${userID}/address/${id}`, {
                 method: 'DELETE'
             })
                 .then(() => {
                     console.log('xóa thành công')
                     setInfo(!info)
+                    LOADING(false)
                 })
         }
     }
@@ -106,13 +107,14 @@ function User({ FETCH_USER_DATA }) {
     //check fetch user
     let user = JSON.parse(localStorage.getItem('username'))
     if (info || infoData.length === 0) {
+        LOADING(true)
         FETCH_ALL_DATA(API, data => {
             infoData = data.filter(item => item.ID === user.ID)
             FETCH_USER_DATA(infoData) // luu user trong store
             setInfo(!info)
+            LOADING(false)
         })
     }
-    console.log(info)
     return (
         <div className="main--content txt_c" style={{ padding: "3rem 0" }}>
 
@@ -130,7 +132,6 @@ function User({ FETCH_USER_DATA }) {
                     {addressDetail(checked, infoData[0])}
                 </div>
             </div>
-            <OrderTab />
         </div>
     )
 }
