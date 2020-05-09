@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { LOADING, FETCH_ALL_DATA } from '../../Actions';
+import { API_ORDER } from '../../ConfigAPI/ConfigAPI'
 const mapStateToProps = state => {
     return {
         Cart: state.Cart,
@@ -101,7 +102,7 @@ async function submitCheckOut(user, cart, checkout, sum) {
             order: [{ product: cart, ...shippingAddress, ...shippingOrder, total: sum, note: noteCustomer, status: "chờ xử lý" }],
         }
 
-        await FETCH_ALL_DATA("https://5e3d62c7a49e540014dc0ba4.mockapi.io/dbCustomer", dt => {
+        await FETCH_ALL_DATA(API_ORDER, dt => {
             let index = -1;
             let temp = null;
             for (const i in dt) {
@@ -110,7 +111,7 @@ async function submitCheckOut(user, cart, checkout, sum) {
                     temp = i
                 }
             }
-            fetch(`https://5e3d62c7a49e540014dc0ba4.mockapi.io/dbCustomer/${index !== -1 ? index : ""}`, {
+            fetch(`${API_ORDER}/${index !== -1 ? index : ""}`, {
                 method: `${index !== -1 ? "PUT" : "POST"}`,
                 headers: { 'Content-Type': 'application/json', },
                 body: JSON.stringify(index !== -1 ? { order: [...dt[temp].order, ...data.order] } : data)

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import ListOrder from './listOrder'
 import { FETCH_ALL_DATA, LOADING } from '../../../Actions/index'
+import { API_ORDER } from '../../../ConfigAPI/ConfigAPI'
 let Data = []
 function OrderTab() {
     const [state, func] = useState(true);
@@ -8,7 +9,7 @@ function OrderTab() {
     if (!user) return document.location.pathname = "login"
     if (state) {
         LOADING(true)
-        FETCH_ALL_DATA("https://5e3d62c7a49e540014dc0ba4.mockapi.io/dbCustomer", data => {
+        FETCH_ALL_DATA(API_ORDER, data => {
             Data = data.filter(i => i.user.ID === user.ID)
             func(!state)
         })
@@ -40,7 +41,9 @@ function showOrder(Data) {
     result = order.map((item, index) => {
         return (
             <div className="fl_r" key={index}>
-                <img src={item.product[0].product.imageThumbnail} alt="order" />
+                <div className="fl_c listOrder__content--image" data-before={`+${item.product.length}`} >
+                    <img src={item.product[0].product.imageThumbnail} alt="order" />
+                </div>
                 <div className="fl_c listOrder__content--status txt">
                     <strong>trạng thái</strong>
                     <span>{item.status}</span>
