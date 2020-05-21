@@ -67,7 +67,7 @@ function formNewAddress(numb, props, addressIndex) {
                 })
                 .catch(err => console.log(err))
         } else {
-            if (checkNumb.test(tel) === false) alert("Số điện thoại không hợp lệ");
+            if (!checkNumb.test(tel)) alert("Số điện thoại không hợp lệ");
             if (name === '') alert("Tên không được để trống")
             if (address === '') alert("Địa chỉ không được để trống")
         }

@@ -21,7 +21,6 @@ function Payment({ Cart, User, CheckOut }) {
     let productResult = Cart.map((item, index) => {
         return (
             <div className="Payment__products--details" key={index}>
-
                 <div className="fl_r">
                     <Link to={`/product-detail`} onClick={() => pre_detail(item.product)} >
                         <img src={item.product.imageThumbnail} alt={item.product.name} />
@@ -130,7 +129,12 @@ async function submitCheckOut(user, cart, checkout, sum) {
 
 
     } else {
-        if (!shippingAddress) alert("Bạn chưa chọn địa chỉ giao hàng")
+        console.log(user, cart, checkout);
+        if (!shippingAddress) {
+            (user[0] && user[0].address.length <= 0) ?
+                alert("bạn chưa thêm địa chỉ nào, vui lòng thêm địa chỉ", document.location.pathname = "/user")
+                : alert("Bạn chưa chọn địa chỉ giao hàng")
+        }
         if (!localStorage.getItem("products")) alert("chưa có sản phẩm nào trong giỏ hàng")
     }
 }

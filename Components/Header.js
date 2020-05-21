@@ -21,10 +21,16 @@ function Header({ Cart, allProduct, productAo, productQuan, productGiay, product
     }
     let nav__link = () => {
         let username = localStorage.getItem('username');
-        let userDetail = JSON.parse(username)
+        let userDetail = JSON.parse(username);
         if (username) {
             return (
-                <li><Link to='/user'>{userDetail.fullName} <i className="far fa-caret-square-down"></i></Link></li>
+                <li><Link to="#" onClick={() => collapseOption()}>{userDetail.fullName} <i className="far fa-caret-square-down"></i></Link>
+                    <ul id="user__collapse" className="fl_c" onClick={() => collapseOption()}>
+                        <li><Link to='/user'>thông tin</Link></li>
+                        <li><Link to='/user/order'>đơn hàng</Link></li>
+                        <li><Link to='#' onClick={()=>logout()}>đăng xuất <i className="fas fa-sign-out-alt"></i></Link></li>
+                    </ul>
+                </li>
             )
         } else {
             return (
@@ -36,16 +42,24 @@ function Header({ Cart, allProduct, productAo, productQuan, productGiay, product
         }
     }
     window.onload = function () {
-        let HeaderSearch = document.getElementById("HeaderSearch");
-        HeaderSearch.addEventListener('keypress', function (e) {
-            if (e.charCode === 13 || e.key === "Enter" || e.keyCode === 13) {
-                if (window.location.pathname === "/") {
-                    OPTION_LEFT("TẤT CẢ", HeaderSearch.value, 0, 0, 9999)
+        let HeaderSearch = document.getElementById("HeaderSearch")
+        if (HeaderSearch) {
+            HeaderSearch.addEventListener('keypress', function (e) {
+                if (e.charCode === 13 || e.key === "Enter" || e.keyCode === 13) {
+                    if (window.location.pathname === "/") {
+                        OPTION_LEFT("TẤT CẢ", HeaderSearch.value, 0, 0, 9999)
+                    }
                 }
-            }
-        })
+            })
+        }
     }
-
+    function collapseOption() {
+        document.getElementById("user__collapse").classList.toggle("active")
+    }
+    function logout() {
+        localStorage.removeItem("username")
+        document.location.reload()
+    }
 
     return (
         <div className="page--top">
@@ -53,15 +67,15 @@ function Header({ Cart, allProduct, productAo, productQuan, productGiay, product
                 <div className="--header--top">
                     <div className="--left">
                         <ul>
-                            <li><Link to=""><i className="fas fa-barcode"></i> <span className="text__responsive">Tải Ứng Dụng</span></Link></li>
-                            <li><Link to=""><span className="text__responsive">Kết Nối</span> <i className="fab fa-facebook" /> <i className="fab fa-instagram" /></Link>
+                            <li><Link to="#"><i className="fas fa-barcode"></i> <span className="text__responsive">Tải Ứng Dụng</span></Link></li>
+                            <li><Link to="#"><span className="text__responsive">Kết Nối</span> <i className="fab fa-facebook" /> <i className="fab fa-instagram" /></Link>
                             </li>
                         </ul>
                     </div>
                     <div className="--right">
                         <ul>
-                            <li><Link to="/user/order"><i className="fas fa-bell" /><span className="text__responsive">Thông Báo</span> </Link></li>
-                            <li><Link to="/user/order"><i className="far fa-question-circle" /><span className="text__responsive">Trợ Giúp</span></Link></li>
+                            <li><Link to="/#"><i className="fas fa-bell" /><span className="text__responsive">Thông Báo</span> </Link></li>
+                            <li><Link to="/#"><i className="far fa-question-circle" /><span className="text__responsive">Trợ Giúp</span></Link></li>
                             {nav__link()}
                         </ul>
                     </div>

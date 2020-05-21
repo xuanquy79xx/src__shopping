@@ -13,6 +13,7 @@ import Register from './Components/login/register';
 import User from './Components/user';
 import CheckOut from './Components/checkout/checkout';
 import OrderTab from './Components/user/orderTab/orderTab';
+import OrderDetails from './Components/user/orderTab/orderDetails';
 function App() {
   document.title = "Shopping"
   return (
@@ -26,8 +27,9 @@ function App() {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/checkout" component={CheckOut} />
-          <Route path="/user" exact={true} component={User} />
-          <Route path="/user/order" component={OrderTab} />
+          <Route path="/user" exact={true}component={User} />
+          <Route path="/user/order" exact={true} component={OrderTab} />
+          <Route path="/user/order/details" exact={true} component={OrderDetails} />
           <Route path="" component={NotFound} />
         </Switch>
         <Footer />

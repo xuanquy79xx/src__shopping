@@ -219,7 +219,31 @@
     align-self: center;
 }
 
+@media (max-width:1000px){
+.listOrder__content>div{
+    align-items: center;
+}
+.listOrder__content--status,
+.listOrder__content--method{
+    display: none;
+}
+.listOrder__content--viewDetail>button{
+transform: scale(.8);
+}
+.listOrder__info{
+    width: 30%;
+}
+.listOrder__content{
+    width: 70%;
+}
+.orderDetails__info{
+    width: 60%!important;
+}
+.orderDetails__address{
+    width: 35%!important;
+}
 
+}
 
 
 

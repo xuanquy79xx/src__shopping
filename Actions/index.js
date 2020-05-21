@@ -50,7 +50,8 @@ export const FETCH_DATA = (URL, method, data) => {
 export const FETCH_ALL_DATA = (URL, nextFunction) => {
     return fetch(URL)
         .then(res => res.json())
-        .then(nextFunction).catch(err => console.error(err))
+        .then(nextFunction)
+        .catch(err => { console.error(err); LOADING(false) })
 }
 
 export const SHIPPING_CHECKOUT = (checkOption, v1, v2, v3) => {
